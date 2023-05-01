@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le locataire{% endblock %}
+
+{% block body %}
+
+
+<div class="container border rounded my-5">
+<div class="title my-3 text-center"><h2>Modifier le locataire {{ locataire.nom }}</h2></div>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="row my-4">
+    <div class="col-6">
+    <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    {{ form_end(form) }}
+    </div>
+    <div class="col-6">
+    <a href="{{ path('app_locataires') }}" class="btn btn-secondary">Retour à la liste des locataires</a>
+    </div>
+    </div>
+</div>
+
+{# Message si validation des modifications pris en compte #}
+{% for message in app.flashes('success') %}
+<div class="alert alert-success ">
+{{ message }}
+</div>
+{% endfor %}
+
+
+
+
+
+
+
+{% endblock %}

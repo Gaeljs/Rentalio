@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContratsController!{% endblock %}
+
+{% block body %}
+
+
+<div class="container my-4">
+    <h1>Gestion des contrats ✅</h1>
+    <hr>
+</div>
+
+
+<div class="container">
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item">
+            <a href="{{ path('app_contrats_create') }}">Créer un contrat</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="container my-4">
+<div class="row">
+{% for contrat in contrats %}
+<div class="card m-3" style="width: 24rem;">
+    <div class="card-body">
+        <h5 class="card-title">Contrat numéro : {{ contrat.id }}</h5>
+        <p class="card-text">Remarques au sujet du contrat : </p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Locataire : {{ contrat.getLocataireId()}}</li>
+        <li class="list-group-item">Logement : {{ contrat.getLogementId() }}</li>
+        <li class="list-group-item">Date entrée : {{ contrat.dateEntree|date('d/m/y')}} </li>
+        <li class="list-group-item">Date sortie : {{ contrat.dateSortie|date('d/m/y')}}</li>
+        <li class="list-group-item">Solde actuel en euros : {{ contrat.getSolde() }}</li>
+    </ul>
+    <div class="card-body">
+        <a href="{{ path('app_contrats_edit', {'id': contrat.id}) }}" class="btn btn-primary">Modifier</a>
+        <a href="#" class="btn btn-primary">Gérer</a>
+
+        <form method="POST" action="{{ path('app_contrats_delete', {'id': contrat.id}) }}" onsubmit="return confirm('Etes vous sur ?')" style="display: inline-block;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contrat.id) }}">
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+
+
+{% endblock %}

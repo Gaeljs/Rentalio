@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un locataire{% endblock %}
+
+{% block body %}
+
+{#  Message de validation  #}
+<div class="container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success text-center p-2">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+
+{# formulaire creation d'un  locataire #}
+<div class="container border rounded p-3 my-4">
+    <div class="title text-center">
+        <h2>Créer un locataire</h2>
+        <hr>
+    </div>
+    <form method="post" action="{{ path('app_locataires_create') }}">
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary my-3">Créer</button>
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un logement{% endblock %}
+
+{% block body %}
+
+
+
+{# formulaire creation d'un logement #}
+<div class="container border rounded p-3 my-4">
+    <div class="title text-center">
+        <h2>Ajouter un logement</h2>
+        <hr>
+    </div>
+    <form method="post" action="{{ path('app_logements_create') }}">
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary my-3">Créer</button>
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+
+
