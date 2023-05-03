@@ -4,13 +4,14 @@ namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PaiementControllerTest extends WebTestCase
+class PaiementsControllerTest extends WebTestCase
 {
-    public function testPaiementControllerExist(): void
+    public function testPaiementsControllerExist(): void
     {
         $client = static::createClient();
-        $client = $client->request('GET', '/paiement/new');
+        $crawler = $client->request('GET', '/paiements');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        
     }
 }
