@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Contrat;
 use App\Repository\PaiementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

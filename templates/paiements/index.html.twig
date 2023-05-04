@@ -3,18 +3,50 @@
 {% block title %}Hello PaiementsController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/gaelelm/Desktop/rentalio/rentalio/src/Controller/PaiementsController.php'|file_link(0) }}">src/Controller/PaiementsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/gaelelm/Desktop/rentalio/rentalio/templates/paiements/index.html.twig'|file_link(0) }}">templates/paiements/index.html.twig</a></code></li>
-    </ul>
+<div class="container my-5">
+<a href="{{ path('app_paiements_create') }}" class="btn btn-primary">Ajouter un paiement</a>
 </div>
+
+
+
+
+
+
+<div class="container">
+<h1>Liste des paiements</h1>
+<br>
+<div class="col-12">
+    {% if paiements is not empty %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Montant</th>
+                <th>Date</th>
+                <th>Source</th>
+                <th>Type</th>
+                <th>Contrat</th>
+            </tr>
+            
+            {% for paiement in paiements %}
+                <tr>
+                    <td>{{ paiement.id }}</td>
+                    <td>{{ paiement.montant }}</td>
+                    <td>{{ paiement.date|date('Y-m-d') }}</td>
+                    <td>{{ paiement.source }}</td>
+                    <td>{{ paiement.type }}</td>
+                    <td>{{ paiement.getContratId() }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Aucun paiement trouvé.</p>
+    {% endif %}
+    <hr>
+</div>
+</div>
+
+
+
+
+
 {% endblock %}

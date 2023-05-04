@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Paiement{% endblock %}
+
+{% block body %}
+
+
+
+{# formulaire creation d'un paiement #}
+<div class="container border rounded p-3 my-4">
+    <div class="title text-center">
+        <h2>Ajouter un paiement</h2>
+        <hr>
+    </div>
+    <form method="post" action="{{ path('app_paiements_create') }}">
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary my-3">Créer</button>
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+
+
