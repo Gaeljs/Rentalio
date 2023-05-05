@@ -1,0 +1,24 @@
+{# templates/logements/edit.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un paiement{% endblock %}
+
+{% block body %}
+
+{#  Formulaire de modification d'un paiement  #}
+<div class="container my-5 p-3 border rounded">
+    <div class="title text-center">
+        <h2>Modifier un paiement</h2>
+    </div>
+    <div class="container">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary my-2">Mettre à jour</button>
+        {{ form_end(form) }}
+        <a href="{{ path('app_paiements') }}" class="btn btn-secondary">Retour à la liste des paiements</a>
+    </div>
+</div>
+
+
+{% endblock %}

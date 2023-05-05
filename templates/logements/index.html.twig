@@ -58,7 +58,7 @@
             <a href="{{ path('app_logements_edit', {'id': logement.id}) }}" class="btn btn-primary">Modifier</a>
         </div>
         <div class="col-4">
-            <form action="{{ path('app_logements_delete', {'id': logement.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce logement ?');">
+            <form action="{{ path('app_logements_delete', {'id': logement.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce logement ?')">
                 <button type="submit" class="btn btn-danger">Supprimer</button>
             </form>
         </div>

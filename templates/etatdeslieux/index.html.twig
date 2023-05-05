@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EtatdeslieuxController!{% endblock %}
+
+{% block body %}
+
+<div class="container my-4">
+    <h1>Gestion Etat des lieux ✅</h1>
+    <hr>
+</div>
+
+<div class="container">
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item">
+            <a href="{{ path('app_etatdeslieux_create') }}">Ajouter un etat des lieux</a>
+        </li>
+    </ul>
+</div>
+
+<div class="container my-3">
+    <div class="row">
+        {% for etat in etatdeslieuux %}
+            <div class="card m-3 p-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title"> État des lieux : {{ etat.id }}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Id : {{ etat.id }} </li>
+                    <li class="list-group-item">Date : {{ etat.date|date('Y-m-d') }} </li>
+                    <li class="list-group-item">Type : {{ etat.type }} </li>
+                    <li class="list-group-item">Contrat : {{ etat.getContratId() }} </li>
+                </ul>
+                <div class="card-body">
+                    <form action="{{ path('app_etatdeslieux_delete', {'id': etat.id}) }}" method="post" onsubmit="return confirm('Etes vous sûr ?')">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etat.id) }}">
+                        <button type="submit" class="btn btn-danger my-3">Supprimer</button>
+                    </form>
+                    <a href="{{ path('app_etatdeslieux_edit', {'id': etat.id}) }}" class="btn btn-success">Modifier</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

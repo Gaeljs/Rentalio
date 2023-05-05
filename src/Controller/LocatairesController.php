@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Locataire;
 use App\Repository\LocataireRepository;
 use App\Form\LocataireFormType;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

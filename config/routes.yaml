@@ -3,17 +3,3 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-
-
-# config/routes.yaml
-paiements_index:
-    path: /paiements
-    controller: App\Controller\PaiementsController::index
-    methods: GET
-    name: paiements
-
-paiements_create:
-    path: /paiements/create
-    controller: App\Controller\PaiementsController::create
-    methods: POST
-    name: app_paiements_create

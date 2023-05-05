@@ -3,50 +3,45 @@
 {% block title %}Hello PaiementsController!{% endblock %}
 
 {% block body %}
-<div class="container my-5">
-<a href="{{ path('app_paiements_create') }}" class="btn btn-primary">Ajouter un paiement</a>
-</div>
 
-
-
-
-
-
-<div class="container">
-<h1>Liste des paiements</h1>
-<br>
-<div class="col-12">
-    {% if paiements is not empty %}
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Montant</th>
-                <th>Date</th>
-                <th>Source</th>
-                <th>Type</th>
-                <th>Contrat</th>
-            </tr>
-            
-            {% for paiement in paiements %}
-                <tr>
-                    <td>{{ paiement.id }}</td>
-                    <td>{{ paiement.montant }}</td>
-                    <td>{{ paiement.date|date('Y-m-d') }}</td>
-                    <td>{{ paiement.source }}</td>
-                    <td>{{ paiement.type }}</td>
-                    <td>{{ paiement.getContratId() }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <p>Aucun paiement trouvé.</p>
-    {% endif %}
+<div class="container my-4">
+    <h1>Gestion des Paiements ✅</h1>
+    <p>Les paiements sont affichés dans l'ordre suivant : Du plus récent au plus ancien</p>
     <hr>
 </div>
+
+<div class="container">
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item">
+            <a href="{{ path('app_paiements_create') }}">Ajouter un paiement</a>
+        </li>
+    </ul>
 </div>
 
-
-
-
+<div class="container my-3">
+<div class="row">
+{% for paiement in paiements %}
+    <div class="card m-3 p-3" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title"> Paiement de : {{ locataires[paiement.getId()] }}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Id : {{ paiement.id }} </li>
+            <li class="list-group-item">Montant : {{ paiement.montant }} </li>
+            <li class="list-group-item">Date : {{ paiement.date|date('Y-m-d') }} </li>
+            <li class="list-group-item">Source : {{ paiement.source }} </li>
+            <li class="list-group-item">Type : {{ paiement.type }} </li>
+            <li class="list-group-item">Contrat : {{ paiement.getContratId() }} </li>
+        </ul>
+        <div class="card-body">
+            <form action="{{ path('app_paiements_delete', {'id': paiement.id}) }}" method="post" onsubmit="return confirm('Etes vous sur ?')">
+            <button type="submit" class="btn btn-danger my-3">Supprimer</button>
+            </form>
+            <a href="{{ path('app_paiements_edit', {'id': paiement.id}) }}" class="btn btn-success">Modifier</a>
+        </div>
+    </div>
+{% endfor %}
+</div>
+</div>
 
 {% endblock %}

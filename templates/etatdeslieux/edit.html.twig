@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un état des lieux{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Modifier un état des lieux</h1>
+        <form method="post" action="{{ path('app_etatdeslieux_edit', {'id': etatdeslieux.id}) }}">
+            {{ form_widget(form) }}
+            <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
+        </form>
+    </div>
+{% endblock %}
