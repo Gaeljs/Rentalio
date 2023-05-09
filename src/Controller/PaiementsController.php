@@ -42,7 +42,12 @@ class PaiementsController extends AbstractController
         $paiement = new Paiement();
         $form = $this->createForm(PaiementFormType::class, $paiement);
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()){
+
+            $contrat = $paiement->getContratId();
+            $contrat->addPaiement($paiement);
+
             $entityManager->persist($paiement);
             $entityManager->flush();
             $this->addFlash('success', 'Le paiement a été enregistré avec succès');

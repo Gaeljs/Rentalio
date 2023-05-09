@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContratRepository;
+use App\Repository\PaiementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -24,7 +25,7 @@ class Contrat
     #[ORM\JoinColumn(nullable: false)]
     private ?Logement $logement_id = null;
 
-    #[ORM\OneToMany(mappedBy: 'location_id', targetEntity: Paiement::class)]
+    #[ORM\OneToMany(mappedBy: 'contrat_id', targetEntity: Paiement::class)]
     private Collection $paiements;
 
     #[ORM\OneToMany(mappedBy: 'contrat_id', targetEntity: EtatDesLieux::class)]
@@ -37,12 +38,13 @@ class Contrat
     private ?\DateTimeInterface $date_sortie = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
-    private ?string $solde = null;
+    private  $solde = 0;
 
     public function __construct()
     {
         $this->paiements = new ArrayCollection();
         $this->etat_des_lieux = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -174,6 +176,39 @@ class Contrat
     {
         return (string) $this->id;
     }
+
+    public function isDepotDeGarantiePaid(): bool 
+    {
+        foreach ($this->paiements as $paiement) {
+            if(!$paiement->getType()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public function addPaiementToSolde(Paiement $paiement): self
+    {
+        if ($paiement->getType() == true ) {
+            $this->solde += $paiement->getMontant();
+        } elseif($paiement->getType() == false) {
+            $this->solde += $paiement->getMontant();
+        }
+        return $this;
+    }
+
+    public function isLoyerUpToDate(): bool
+    {
+        $currentMonth = (new \DateTime())->format('Y-m');
+        foreach ($this->paiements as $paiement) {
+            if ($paiement->getType() && $paiement->getDate()->format('Y-m') === $currentMonth) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 
 

@@ -48,11 +48,12 @@ class ContratFormType extends AbstractType
                 'widget' => 'single_text',
             ])
 
-            ->add('solde',  TextType::class, [
-                'attr' => [
-                    'class' => 'form-control my-2'
-                ]
-            ])
+            // modifié car le solde est inité à 0
+            // ->add('solde',  TextType::class, [
+            //     'attr' => [
+            //         'class' => 'form-control my-2'
+            //     ]
+            // ])
         ;
     }
 

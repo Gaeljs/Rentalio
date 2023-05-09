@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Contrat;
+use App\Entity\Paiement;
+use App\Repository\PaiementRepository;
 use App\Form\ContratFormType;
 use App\Repository\ContratRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,9 +20,11 @@ class ContratsController extends AbstractController
     {
 
         $contrats = $contratRepository->findAll();
+        $soldesById = $contratRepository->getSoldesById();
 
         return $this->render('contrats/index.html.twig', [
             'contrats' => $contrats,
+            'soldes' => $soldesById,
         ]);
     }
 
@@ -35,7 +39,6 @@ class ContratsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($contrat);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_contrats');
         }
 

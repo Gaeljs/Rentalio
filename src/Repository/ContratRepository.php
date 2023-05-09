@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Paiement;
 use App\Entity\Contrat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,6 +17,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ContratRepository extends ServiceEntityRepository
 {
+
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Contrat::class);
@@ -63,4 +67,42 @@ class ContratRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function getTotalSolde(): float
+    {
+        $contrats = $this->findAll();
+        $totalSolde = 0;
+
+        foreach ($contrats as $contrat) {
+            $paiements = $contrat->getPaiements();
+
+            foreach ($paiements as $paiement) {
+                $totalSolde += $paiement->getMontant();
+            }
+        }
+
+        return $totalSolde;
+    }
+
+    public function getSoldesById(): array
+    {
+        $contrats = $this->findAll();
+        $soldesById = [];
+
+        foreach ($contrats as $contrat) {
+            $paiements = $contrat->getPaiements();
+            $solde = 0;
+
+            foreach ($paiements as $paiement) {
+                $solde += $paiement->getMontant();
+            }
+
+            $soldesById[$contrat->getId()] = $solde;
+        }
+
+        return $soldesById;
+    }
+
+
+
 }

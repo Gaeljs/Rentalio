@@ -28,8 +28,8 @@ class Paiement
     #[ORM\Column(length: 30)]
     private ?string $source = null;
 
-    #[ORM\Column(length: 30)]
-    private ?string $type = null;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $type = true;
 
     public function getId(): ?int
     {
@@ -84,12 +84,12 @@ class Paiement
         return $this;
     }
 
-    public function getType(): ?string
+    public function getType(): ?bool
     {
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType(bool $type): self
     {
         $this->type = $type;
 

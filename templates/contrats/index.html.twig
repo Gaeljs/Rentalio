@@ -26,14 +26,33 @@
 <div class="card m-3" style="width: 24rem;">
     <div class="card-body">
         <h5 class="card-title">Contrat numéro : {{ contrat.id }}</h5>
-        <p class="card-text">Remarques au sujet du contrat : </p>
+        
+        
+        <p>
+            {% if contrat.isDepotDeGarantiePaid() %}
+                <span class="badge bg-success">Dépôt de garantie OK</span>
+            {% else %}
+                <span class="badge bg-danger">Dépôt de garantie KO</span>
+            {% endif %}
+        </p>
+
+        <p>
+            {% if contrat.isLoyerUpToDate() %}
+                <span class="badge bg-success">Loyer OK</span>
+            {% else %}
+                <span class="badge bg-danger">Loyer KO</span>
+            {% endif %}
+        </p>
+
+
+        
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">Locataire : {{ contrat.getLocataireId()}}</li>
         <li class="list-group-item">Logement : {{ contrat.getLogementId() }}</li>
         <li class="list-group-item">Date entrée : {{ contrat.dateEntree|date('d/m/y')}} </li>
         <li class="list-group-item">Date sortie : {{ contrat.dateSortie|date('d/m/y')}}</li>
-        <li class="list-group-item">Solde actuel en euros : {{ contrat.getSolde() }}</li>
+        <li class="list-group-item">Solde : {{ soldes[contrat.id]}}</li>
     </ul>
     <div class="card-body">
         <a href="{{ path('app_contrats_edit', {'id': contrat.id}) }}" class="btn btn-primary">Modifier</a>

@@ -30,7 +30,7 @@
             <li class="list-group-item">Montant : {{ paiement.montant }} </li>
             <li class="list-group-item">Date : {{ paiement.date|date('Y-m-d') }} </li>
             <li class="list-group-item">Source : {{ paiement.source }} </li>
-            <li class="list-group-item">Type : {{ paiement.type }} </li>
+            <li class="list-group-item">Type : {{ paiement.type ? 'Loyer' : 'Depot de garantie' }} </li>
             <li class="list-group-item">Contrat : {{ paiement.getContratId() }} </li>
         </ul>
         <div class="card-body">

@@ -6,6 +6,7 @@ use App\Entity\Contrat;
 use App\Entity\Paiement;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,10 +36,14 @@ class PaiementFormType extends AbstractType
                 ]
             ])
 
-            ->add('type',TextType::class, [
+            ->add('type',ChoiceType::class, [
+                'choices' => [
+                    'Loyer' => true,
+                    'Dépot de garantie' => false,
+                ],
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
             ] )
 
             ->add('contrat_id', EntityType::class, [
