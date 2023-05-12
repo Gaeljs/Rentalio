@@ -209,6 +209,24 @@ class Contrat
         return false;
     }
 
+    #[ORM\ManyToOne(targetEntity:"App\Entity\Locataire")]
+    #[ORM\JoinColumn(nullable:false)]
+    
+    private $locataire;
+
+    public function getLocataire(): ?Locataire
+    {
+        return $this->locataire;
+    }
+
+    public function setLocataire(?Locataire $locataire): self
+    {
+        $this->locataire = $locataire;
+
+        return $this;
+    }
+
+
 }
 
 

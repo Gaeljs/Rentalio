@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilan des comptes</title>
+</head>
+<body>
+    <h1>Bilan des comptes pour le contrat n° {{contrat.id}}</h1>
+
+    <h2>Informations sur le contrat:</h2>
+    <ul>
+        <li>Locataire: {{contrat.locataire.name}}</li>
+        <li>Adresse: {{contrat.locataire.address}}</li>
+        <li>Date de début: {{contrat.dateStart|date('d/m/Y')}}</li>
+        <li>Date de fin: {{contrat.dateEnd|date('d/m/Y')}}</li>
+    </ul>
+    <h2>Solde:</h2>
+    <p>{{solde}}</p>
+</body>
+</html>

@@ -5,41 +5,44 @@
 {% block body %}
 
 <div class="container my-4">
-<h2>Liste des logements</h2>
-<hr>
+    <h2>Liste des logements</h2>
+    <hr>
 </div>
 
 {#  Message de validation  #}
-<div class="container">
+<div class="container my-3">
     {% for message in app.flashes('success') %}
         <div class="alert alert-success text-center p-2">
             {{ message }}
         </div>
     {% endfor %}
 </div>
+{# Fin Message de validation  #}
 
 
-
-{# Retraviller  #}
 <div class="container">
-    <ul class="list-group list-group-horizontal">
         <li class="list-group-item">
-            <a href="{{ path('app_logements_create') }}">Ajouter logement</a>
+            <a href="{{ path('app_logements_create') }}" class="btn btn-primary">Ajouter logement</a>
         </li>
-    </ul>
-    <hr>
 </div>
 
 
 <div class="container">
 <div class="row">
 {% for logement in logements %}
+{% set isGestion = logement.isGestion %}
 <div class="card my-3 mx-3 p-3" style="width: 24rem;">
-    <img class="card-img-top" src="..." alt="Card image cap">
     <div class="card-body">
         <h5 class="card-title">Ville : {{ logement.ville }}</h5>
-        <p class="card-text"> Adresse : {{logement.adresse}} </p> 
-        <p class="card-text"> Compléments : {{logement.complement}} </p> 
+        <p class="card-text m-0"> Adresse : {{logement.adresse}}</p> 
+        <p class="card-text"> Compléments : {{logement.complement}}</p> 
+        <p>
+            {% if isGestion %}
+                <span style="color: green;">Nous prélevons 8% de frais de gestion sur le loyer.</span>
+            {% endif %}
+        </p>
+
+
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">Code postal : {{ logement.codePostal }} </li>
@@ -51,15 +54,12 @@
     <div class="card-body">
 
     <div class="row text-center">
-        <div class="col-4">
-            <a href="#" class="btn btn-primary">Gérer</a>
-        </div>
-        <div class="col-4">
+        <div class="col-6">
             <a href="{{ path('app_logements_edit', {'id': logement.id}) }}" class="btn btn-primary">Modifier</a>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <form action="{{ path('app_logements_delete', {'id': logement.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce logement ?')">
-                <button type="submit" class="btn btn-danger">Supprimer</button>
+                <button type="submit" class="btn btn-primary">Supprimer</button>
             </form>
         </div>
     </div>

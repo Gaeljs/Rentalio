@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Contrat;
 use App\Entity\Paiement;
-use App\Repository\PaiementRepository;
 use App\Form\ContratFormType;
 use App\Repository\ContratRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 
 class ContratsController extends AbstractController
 {
@@ -83,14 +85,87 @@ class ContratsController extends AbstractController
     }
 
 
+    // QUITTANCE 
+    #[Route('/contrats/{id}/quittance', name: 'app_contrats_quittance')]
+    public function generateQuittance(Contrat $contrat)
+    {
+        if ($contrat->isLoyerUpToDate()) {
+
+            // créer une quittance
+            $html = $this->renderView('contrats/quittance.html.twig', ['contrat' => $contrat]);
+
+            // config Dompdf
+            $pdfOptions = new Options();
+            $pdfOptions->set('defaultFont', 'Arial');
+
+            // instance 
+            $dompdf = new Dompdf($pdfOptions);
+
+            // injection du html a generer
+            $dompdf->loadHtml($html);
+
+            // generer le pdf
+            $dompdf->render();
+
+            // output
+            $pdfOutput = $dompdf->output();
+
+            // response symfony 
+            $response = new Response($pdfOutput);
+
+            $response->headers->set('Content-Type', 'application/pdf');
+            $response->headers->set('Content-Disposition', 'attachment; filename="quittance.pdf"');
+
+            return $response;
+        }
+
+        throw $this->createNotFoundException('Le loyer pour le mois en cours na pas été payé');
+
+    }
 
 
 
+    // Sortie d'un locataire
+    #[Route('/contrats/{id}/sortie', name: 'app_contrats_sortie')]
+    public function sortieLocataire(Contrat $contrat): Response
+    {
+        // verif paiement ok
+        if ($contrat->isLoyerUpToDate() && $contrat->isDepotDeGarantiePaid()) {
+            $solde = $contrat->getSolde();
 
 
 
+            // doc pdf 
+            $html = $this->renderView('contrats/sortie.html.twig', [
+                'contrat' => $contrat,
+                'solde' => $solde,
+            ]);
 
+            // config Dompdf
+            $pdfOptions = new Options(); 
+            $pdfOptions->set('defaultFont', 'Arial');
 
+            // instance 
+            $dompdf = new Dompdf($pdfOptions);
 
-    
+            // html a générer
+            $dompdf->loadHtml($html);
+
+            // sortie 
+            $pdfOutput = $dompdf->output();
+
+            // Response
+
+            $response = new Response($pdfOutput);
+
+            $response->headers->set('Content-type', 'application/pdf');
+            $response->headers->set('Content-Disposition', 'attachment; filename="bilan_des_comptes.pdf"');
+
+            return $response;
+        
+        }
+
+        throw $this->createNotFoundException('Les paiements pour ce contrat ne sont pas à jour, merci de régulariser les comptes dans les plus bref délais.');
+    }
+
 }

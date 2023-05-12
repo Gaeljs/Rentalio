@@ -5,17 +5,14 @@
 {% block body %}
 
 <div class="container my-4">
-    <h1>Gestion des Paiements ✅</h1>
-    <p>Les paiements sont affichés dans l'ordre suivant : Du plus récent au plus ancien</p>
+    <h1>Gestion des Paiements</h1>
     <hr>
 </div>
 
 <div class="container">
-    <ul class="list-group list-group-horizontal">
         <li class="list-group-item">
-            <a href="{{ path('app_paiements_create') }}">Ajouter un paiement</a>
+            <a href="{{ path('app_paiements_create') }}" class="btn btn-primary">Ajouter un paiement</a>
         </li>
-    </ul>
 </div>
 
 <div class="container my-3">
@@ -23,7 +20,7 @@
 {% for paiement in paiements %}
     <div class="card m-3 p-3" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title"> Paiement de : {{ locataires[paiement.getId()] }}</h5>
+            <h5 class="card-title">Locataire : {{ locataires[paiement.getId()] }}</h5>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">Id : {{ paiement.id }} </li>
@@ -34,10 +31,25 @@
             <li class="list-group-item">Contrat : {{ paiement.getContratId() }} </li>
         </ul>
         <div class="card-body">
+
+            <div class="row">
+            <div class="col-6">
+            <a href="{{ path('app_paiements_edit', {'id': paiement.id}) }}" class="btn btn-primary">Modifier</a>
+            </div>
+            <div class="col-6">           
             <form action="{{ path('app_paiements_delete', {'id': paiement.id}) }}" method="post" onsubmit="return confirm('Etes vous sur ?')">
-            <button type="submit" class="btn btn-danger my-3">Supprimer</button>
+            <button type="submit" class="btn btn-primary">Supprimer</button>
             </form>
-            <a href="{{ path('app_paiements_edit', {'id': paiement.id}) }}" class="btn btn-success">Modifier</a>
+            </div>
+            </div>
+
+
+
+
+
+
+
+
         </div>
     </div>
 {% endfor %}

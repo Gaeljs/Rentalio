@@ -19,13 +19,13 @@ class LogementsController extends AbstractController
     public function index(LogementRepository $logementRepository): Response
     {
         $logements = $logementRepository->findAll();
+        $isGestion = false;
+
 
         return $this->render('logements/index.html.twig', [
             'logements' => $logements,
         ]);
     }
-
-
 
     // CREATE Logement
     #[Route('/logements/create', name: 'app_logements_create')]
