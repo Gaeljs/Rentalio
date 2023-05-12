@@ -6,6 +6,7 @@ use App\Entity\Contrat;
 use App\Entity\Paiement;
 use App\Form\ContratFormType;
 use App\Repository\ContratRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,14 @@ class ContratsController extends AbstractController
         return $this->render('contrats/index.html.twig', [
             'contrats' => $contrats,
             'soldes' => $soldesById,
+        ]);
+    }
+
+    #[Route('/contrats/archive', name: 'app_contrats_archive')]
+    public function archive(ContratRepository $contratRepository): Response
+    {
+        return $this->render('contrats/archive.html.twig', [
+            'contrats' => $contratRepository->findBy(['archived' => true]),
         ]);
     }
 
@@ -127,45 +136,22 @@ class ContratsController extends AbstractController
 
     // Sortie d'un locataire
     #[Route('/contrats/{id}/sortie', name: 'app_contrats_sortie')]
-    public function sortieLocataire(Contrat $contrat): Response
+    public function sortieLocataire(Contrat $contrat, EntityManagerInterface $entityManager): Response
     {
         // verif paiement ok
         if ($contrat->isLoyerUpToDate() && $contrat->isDepotDeGarantiePaid()) {
             $solde = $contrat->getSolde();
-
-
-
-            // doc pdf 
-            $html = $this->renderView('contrats/sortie.html.twig', [
-                'contrat' => $contrat,
-                'solde' => $solde,
-            ]);
-
-            // config Dompdf
-            $pdfOptions = new Options(); 
-            $pdfOptions->set('defaultFont', 'Arial');
-
-            // instance 
-            $dompdf = new Dompdf($pdfOptions);
-
-            // html a générer
-            $dompdf->loadHtml($html);
-
-            // sortie 
-            $pdfOutput = $dompdf->output();
-
-            // Response
-
-            $response = new Response($pdfOutput);
-
-            $response->headers->set('Content-type', 'application/pdf');
-            $response->headers->set('Content-Disposition', 'attachment; filename="bilan_des_comptes.pdf"');
-
-            return $response;
+            $contrat->setArchived(true);
+            $entityManager->flush();
         
-        }
-
-        throw $this->createNotFoundException('Les paiements pour ce contrat ne sont pas à jour, merci de régulariser les comptes dans les plus bref délais.');
+        return $this->render('contrats/bilan.html.twig', [
+            'solde' => $solde,
+            'contrat' => $contrat,
+        ]);
+        
+        };
     }
 
 }
+
+

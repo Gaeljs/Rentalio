@@ -22,68 +22,62 @@
 <div class="container my-4">
 <div class="row">
 {# Debut de la boucle for #}
+
 {% for contrat in contrats %}
-
-{# Debut de la card #}
-<div class="card m-3" style="width: 24rem;">
-
-{# Title de la card #}
-<h3 class="card-title p-3">Contrat numéro : {{ contrat.id }}</h3>
-{# Fin de title card #}
-
-{# Partie ul de la card #}
-<ul class="list-group list-group-flush">
-    <li class="list-group-item">{% if contrat.isLoyerUpToDate() %}
-        <span class="text-success">Loyer OK</span>
-        {% else %}
-        <span class="text-danger">Loyer KO</span>
-        {% endif %}
-    </li>
-    <li class="list-group-item">{% if contrat.isDepotDeGarantiePaid() %}
-        <span class="text-success">Dépôt de garantie OK</span>
-        {% else %}
-        <span class="text-danger">Dépôt de garantie KO</span>
-        {% endif %}
-    </li>
-    <li class="list-group-item">Locataire : {{ contrat.getLocataireId()}}</li>
-    <li class="list-group-item">Logement : {{ contrat.getLogementId() }}</li>
-    <li class="list-group-item">Date entrée : {{ contrat.dateEntree|date('d/m/y')}} </li>
-    <li class="list-group-item">Date sortie : {{ contrat.dateSortie|date('d/m/y')}}</li>
-    <li class="list-group-item">Solde : {{ soldes[contrat.id]}}</li>
-    <li class="list-group-item">
-        {% if contrat.isLoyerUpToDate and contrat.isDepotDeGarantiePaid %}
-        <a href="{{ path('app_contrats_sortie', {id: contrat.id}) }}" class="text-success">Document de sortie disponible</a>
-        {% else %}
-        <span class="text-muted text-danger">Document de sortie non disponible</span>
-        {% endif %}
-    </li>
-</ul>
-{# Fin de la partie ul de la card #}
-
-{# Partie boutons de la card #}
-<div class="row m-3">
-    <div class="col-4 d-flex justify-content-center">
-        <a href="{{ path('app_contrats_edit', {'id': contrat.id}) }}" class="btn btn-primary">Modifier</a>
-    </div>
-<div class="col-4 d-flex justify-content-center">    
-    <form method="POST" action="{{ path('app_contrats_delete', {'id': contrat.id}) }}" onsubmit="return confirm('Etes vous sur ?')">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contrat.id) }}">
-        <button type="submit" class="btn btn-primary">Supprimer</button>
-    </form>
-</div>
-<div class="col-4 d-flex justify-content-center">
-    {% if contrat.isLoyerUpToDate %}
-    <a href="{{ path('app_contrats_quittance', {id: contrat.id}) }}" class="btn btn-primary">Quittance</a>
-    {% else %}
-    <span class="text-muted">Quittance non disponible</span>
-    {% endif %}</div>
-</div>
-
-{# Fin de la partie boutons de la card #}
-
-</div>
-{# Fin de la card #}
+    {% if not contrat.archived %}
+        <div class="card m-3" style="width: 24rem;">
+            <h3 class="card-title p-3">Contrat numéro : {{ contrat.id }}</h3>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    {% if contrat.isLoyerUpToDate() %}
+                        <span class="text-success">Loyer OK</span>
+                    {% else %}
+                        <span class="text-danger">Loyer KO</span>
+                    {% endif %}
+                </li>
+                <li class="list-group-item">
+                    {% if contrat.isDepotDeGarantiePaid() %}
+                        <span class="text-success">Dépôt de garantie OK</span>
+                    {% else %}
+                        <span class="text-danger">Dépôt de garantie KO</span>
+                    {% endif %}
+                </li>
+                <li class="list-group-item">Locataire : {{ contrat.getLocataireId() }}</li>
+                <li class="list-group-item">Logement : {{ contrat.getLogementId() }}</li>
+                <li class="list-group-item">Date entrée : {{ contrat.dateEntree|date('d/m/y') }}</li>
+                <li class="list-group-item">Date sortie : {{ contrat.dateSortie|date('d/m/y') }}</li>
+                <li class="list-group-item">Solde : {{ soldes[contrat.id] }}</li>
+                <li class="list-group-item">
+                    {% if contrat.isLoyerUpToDate and contrat.isDepotDeGarantiePaid %}
+                        <a href="{{ path('app_contrats_bilan', {id: contrat.id}) }}" class="text-success">Document de sortie disponible</a>
+                    {% else %}
+                        <span class="text-muted text-danger">Document de sortie non disponible</span>
+                    {% endif %}
+                </li>
+            </ul>
+            <div class="row m-3">
+                <div class="col-4 d-flex justify-content-center">
+                    <a href="{{ path('app_contrats_edit', {'id': contrat.id}) }}" class="btn btn-primary">Modifier</a>
+                </div>
+                <div class="col-4 d-flex justify-content-center">
+                    <form method="POST" action="{{ path('app_contrats_delete', {'id': contrat.id}) }}" onsubmit="return confirm('Etes vous sur ?')">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contrat.id) }}">
+                        <button type="submit" class="btn btn-primary">Supprimer</button>
+                    </form>
+                </div>
+                <div class="col-4 d-flex justify-content-center">
+                    {% if contrat.isLoyerUpToDate %}
+                        <a href="{{ path('app_contrats_quittance', {id: contrat.id}) }}" class="btn btn-primary">Quittance</a>
+                    {% else %}
+                        <span class="text-muted">Quittance non disponible</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endfor %}
+{# Fin de la boucle for !archived #}
+
 {# Fin de la boucle for #}
 </div>
 </div>

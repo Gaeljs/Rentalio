@@ -1,0 +1,26 @@
+{# templates/contrats/create.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Archive{% endblock %}
+
+{% block body %}
+
+<div class="container border rounded my-5 p-3">
+<div class="title text-center">
+    <h1>Archive</h1>
+    <hr>
+</div>
+
+{% for contrat in contrats %}
+<div class="container mt-4 bg-secondary border rounded p-3">
+    <h2>Contrats archivés</h2>
+    <ul>
+        <li>Contrat numéro: {{ contrat.id }}</li>
+        <li>Locataire: {{ contrat.getLocataireId().nom }}</li>
+        <li>Logement: {{ contrat.getLogementId().adresse }}</li>
+        <li>Solde: {{ contrat.solde }}</li>    
+    </ul>
+</div>
+{% endfor %}
+{% endblock %}

@@ -21,6 +21,22 @@ class Contrat
     #[ORM\JoinColumn(nullable: false)]
     private ?Locataire $locataire_id = null;
 
+    private $locataire;
+
+    // ... other properties
+
+    public function getLocataire(): ?Locataire
+    {
+        return $this->locataire;
+    }
+
+    public function setLocataire(?Locataire $locataire): self
+    {
+        $this->locataire = $locataire;
+
+        return $this;
+    }
+
     #[ORM\ManyToOne(inversedBy: 'contrats')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Logement $logement_id = null;
@@ -39,6 +55,21 @@ class Contrat
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private  $solde = 0;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $archived = false;
+
+    public function getArchived(): bool 
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): self
+    {
+        $this->archived = $archived;
+
+        return $this;
+    }
 
     public function __construct()
     {
@@ -207,23 +238,6 @@ class Contrat
             }
         }
         return false;
-    }
-
-    #[ORM\ManyToOne(targetEntity:"App\Entity\Locataire")]
-    #[ORM\JoinColumn(nullable:false)]
-    
-    private $locataire;
-
-    public function getLocataire(): ?Locataire
-    {
-        return $this->locataire;
-    }
-
-    public function setLocataire(?Locataire $locataire): self
-    {
-        $this->locataire = $locataire;
-
-        return $this;
     }
 
 
