@@ -8,6 +8,8 @@
 
 
 
+
+
 <div class="container my-3 bg-success">
 <h2>
 {% if app.user %}
@@ -19,17 +21,21 @@
 
 
 {% else %}
-
-<div class="container my-5 border rounded shadow p-3 mb-5 bg-white">
-    <div class="container text-center my-5">
-        <h1>Launch On Time, Rentalio on trend</h1>
-        <h5>Increase the performance of your renting agency with a killer app</h5>
+<header class="bg-dark py-5" style="height: 90vh">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2">Transformez votre gestion locative en une expérience fluide et productive</h1>
+                    <p class="lead text-white-50 mb-4">Rentabilisez chaque instant avec notre application de gestion locative ultra-performante</p>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{{path('app_register')}}">Créer un compte</a>
+                        <a class="btn btn-outline-light btn-lg px-4" href="{{path('app_login')}}">Connexion</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="container text-center">
-        <a href="" class="btn btn-lg bg-warning mb-3">Créer un compte</a>
-        <a href="" class="btn btn-lg bg-warning mb-3">Se connecter</a>
-    </div>
-</div>
-
+</header>
 {% endif %}
 {% endblock %}
