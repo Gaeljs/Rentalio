@@ -3,6 +3,9 @@
 {% block title %}Modifier un état des lieux{% endblock %}
 
 {% block body %}
+{% if app.user %}
+{# Contenu pour les utilisateurs connectés #}
+
     <div class="container">
         <h1>Modifier un état des lieux</h1>
         <form method="post" action="{{ path('app_etatdeslieux_edit', {'id': etatdeslieux.id}) }}">
@@ -10,4 +13,12 @@
             <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
         </form>
     </div>
+
+{% else %}
+    <div class="container my-5 text-center border rounded p-5 bg-danger">
+    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    </div>
+{% endif %}
+
+
 {% endblock %}

@@ -3,6 +3,8 @@
 {% block title %}Modifier le locataire{% endblock %}
 
 {% block body %}
+{% if app.user %}
+{# Contenu pour les utilisateurs connectés #}
 
 
 <div class="container border rounded my-5">
@@ -27,6 +29,13 @@
 </div>
 {% endfor %}
 
+
+
+{% else %}
+    <div class="container my-5 text-center border rounded p-5 bg-danger">
+    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    </div>
+{% endif %}
 
 
 

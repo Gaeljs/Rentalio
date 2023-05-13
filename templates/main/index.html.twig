@@ -3,6 +3,10 @@
 {% block title %}Hello MainController!{% endblock %}
 
 {% block body %}
+{% if app.user %}
+{# Contenu pour les utilisateurs connectés #}
+
+
 
 <div class="container my-3 bg-success">
 <h2>
@@ -11,25 +15,21 @@
     Id : {{ app.user.id }}
 {% endif %}
 </h2>
-
-<div class="row">
-<div class="col">
-{{ dump() }}
-</div>
 </div>
 
 
+{% else %}
 
-
-
-
-
+<div class="container my-5 border rounded shadow p-3 mb-5 bg-white">
+    <div class="container text-center my-5">
+        <h1>Launch On Time, Rentalio on trend</h1>
+        <h5>Increase the performance of your renting agency with a killer app</h5>
+    </div>
+    <div class="container text-center">
+        <a href="" class="btn btn-lg bg-warning mb-3">Créer un compte</a>
+        <a href="" class="btn btn-lg bg-warning mb-3">Se connecter</a>
+    </div>
 </div>
 
-
-
-
-
-
-
+{% endif %}
 {% endblock %}

@@ -5,7 +5,8 @@
 {% block title %}Créer un contrat{% endblock %}
 
 {% block body %}
-
+{% if app.user %}
+{# Contenu pour les utilisateurs connectés #}
 
 
 <div class="container border rounded my-5 p-3">
@@ -19,5 +20,13 @@
     {{ form_end(form) }}
     <a href="{{ path('app_contrats') }}" class="btn btn-secondary">Retour à la liste des contrats</a>
 </div>
+
+
+
+{% else %}
+    <div class="container my-5 text-center border rounded p-5 bg-danger">
+    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    </div>
+{% endif %}
 
 {% endblock %}

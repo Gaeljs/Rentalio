@@ -5,7 +5,8 @@
 {% block title %}Bilan de compte{% endblock %}
 
 {% block body %}
-
+{% if app.user %}
+{# Contenu pour les utilisateurs connectés #}
 
 
 <div class="container border rounded my-5 p-3">
@@ -14,11 +15,17 @@
     <hr>
 </div>
     <p>Procéder a la sortie du locataire ? </p>
-    <form method="POST" action="{{ path('app_contrats_archive', {id: contrat.id}) }}" onsubmit="return confirm('Etes vous sur ?')">
+    <form method="POST" action="{{ path('app_contrats_bilan', {id: contrat.id}) }}" onsubmit="return confirm('Etes vous sur ?')">
         <input type="hidden" name="_token" value="{{ csrf_token('archive' ~ contrat.id) }}">
         <button type="submit" class="btn btn-primary">Archiver le contrat</button>
     </form>
     <p>Attention archiver un contrat n'entraine pas sa suppression</p>
 </div>
+
+{% else %}
+    <div class="container my-5 text-center border rounded p-5 bg-danger">
+    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    </div>
+{% endif %}
 
 {% endblock %}

@@ -3,6 +3,8 @@
 {% block title %}Hello EtatdeslieuxController!{% endblock %}
 
 {% block body %}
+{% if app.user %}
+{# Contenu pour les utilisateurs connectés #}
 
 <div class="container my-4">
     <h1>Gestion Etat des lieux ✅</h1>
@@ -41,5 +43,13 @@
         {% endfor %}
     </div>
 </div>
+
+
+{% else %}
+    {# Contenu si pas connecté #}
+    <div class="container my-5 text-center border rounded p-5 bg-danger">
+    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    </div>
+{% endif %}
 
 {% endblock %}

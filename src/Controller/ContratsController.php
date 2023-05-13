@@ -135,7 +135,7 @@ class ContratsController extends AbstractController
 
 
     // Sortie d'un locataire
-    #[Route('/contrats/{id}/sortie', name: 'app_contrats_sortie')]
+    #[Route('/contrats/{id}/sortie', name: 'app_contrats_bilan')]
     public function sortieLocataire(Contrat $contrat, EntityManagerInterface $entityManager): Response
     {
         // verif paiement ok
