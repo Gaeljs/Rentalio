@@ -4,8 +4,3 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-
-# config/routes.yaml
-app_register:
-    path: /inscription
-    controller: App\Controller\RegistrationController::register
