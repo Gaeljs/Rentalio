@@ -73,8 +73,8 @@ class Agence implements UserInterface, PasswordAuthenticatedUserInterface
      * @see UserInterface
      */
 
-    #[ORM\Column(type:"text")]
-    private $roles;
+    #[ORM\Column(type:"text", nullable:true)]
+    private $roles = '[]';
 
     public function getRoles(): array
     {
