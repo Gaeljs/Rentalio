@@ -6,7 +6,7 @@
 {% if app.user %}
 {# Contenu pour les utilisateurs connectés #}
 
-{# header de la page #}
+{# haut de la page #}
 <section class="bg-dark py-5">
     <div class="container px-4 px-lg-5">
         <div class="text-center text-white">
@@ -15,12 +15,13 @@
         </div>
         <div class="container my-3">
             <ul class="list-group list-group-horizontal d-flex justify-content-center">
-            <a href="{{path('app_contrats_create')}}" class="btn btn-primary">Créer un contrat</a>
+            <a href="{{path('app_contrats_create')}}" class="btn btn-primary mx-1">Créer un contrat</a>
+            <a href="{{path('app_contrats_archive')}}" class="btn btn-primary mx-1">Contrats archivés</a>
             </ul>
         </div>
     </div>
 </section>
-{# fin header de la page #}
+{# fin haut de la page #}
 
 
 
@@ -104,8 +105,19 @@
 
 
 {% else %}
-    <div class="container my-5 text-center border rounded p-5 bg-danger">
-    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    <div class="container" style="height: 100vh">
+                        <div class="row justify-content-center align-middle">
+                            <div class="col-lg-6">
+                                <div class="text-center mt-4">
+                                    <h2 class="display-1 text-danger">Accés refusé</h2>
+                                    <p>Vous  n'êtes pas authorisé à accéder à cette ressource</p>
+                                    <p>Merci de bien vouloir vous connecté afin d'accéder à cette page</p>
+                                    <a href="{{path('app_main')}}">
+                                        Retour au formulaire de connexion
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
     </div>
 {% endif %}
 

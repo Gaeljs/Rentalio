@@ -6,7 +6,7 @@
 {% if app.user %}
 {# Contenu pour les utilisateurs connectés #}
 
-{# header de la page #}
+{# haut de page #}
 <section class="bg-dark py-5">
     <div class="container px-4 px-lg-5">
         <div class="text-center text-white">
@@ -20,21 +20,21 @@
         </div>
     </div>
 </section>
-{# fin header de la page #}
+{# fin haut de  page #}
 
 
 <div class="container my-5">
 <div class="row">
 {% for paiement in paiements %}
     <div class="card h-100 mx-3 my-3" style="width: 18rem">
-        <!-- Sale badge-->
+        <!-- badge -->
         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ paiement.type ? 'Loyer' : 'Depot de garantie' }}</div>        
-        <!-- Product details-->
+        <!-- Paiement détail -->
         <div class="card-body p-4">
             <div class="text-center">
-                <!-- Product name-->
+                <!-- Payeur -->
                 <h5 class="fw-bolder my-3">Locataire : {{ locataires[paiement.getId()] }}</h5>
-                <!-- Product reviews-->
+                <!-- Paiement info-->
                 <div class="d-flex justify-content-center small text-warning mb-2">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <!-- Product actions-->
+        <!-- paiements actions-->
         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center"><a href="{{ path('app_paiements_edit', {'id': paiement.id}) }}" class="btn btn-primary">Modifier</a></div>
         </div>
@@ -75,8 +75,19 @@
 
 
 {% else %}
-    <div class="container my-5 text-center border rounded p-5 bg-danger">
-    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    <div class="container" style="height: 100vh">
+                        <div class="row justify-content-center align-middle">
+                            <div class="col-lg-6">
+                                <div class="text-center mt-4">
+                                    <h2 class="display-1 text-danger">Accés refusé</h2>
+                                    <p>Vous  n'êtes pas authorisé à accéder à cette ressource</p>
+                                    <p>Merci de bien vouloir vous connecté afin d'accéder à cette page</p>
+                                    <a href="{{path('app_main')}}">
+                                        Retour au formulaire de connexion
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
     </div>
 {% endif %}
 

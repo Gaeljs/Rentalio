@@ -19,7 +19,7 @@ class EtatdeslieuxController extends AbstractController
     {
         $etatdeslieux = $etatdeslieuxRepository->findAll();
         return $this->render('etatdeslieux/index.html.twig', [
-        'etatdeslieuux' => $etatdeslieux,
+        'etatdeslieux' => $etatdeslieux,
         ]);
     }
 
@@ -57,7 +57,7 @@ class EtatdeslieuxController extends AbstractController
         }
 
         return $this->render('etatdeslieux/edit.html.twig', [
-            'locataire' => $etatdeslieux,
+            'etatdeslieux' => $etatdeslieux,
             'form' => $form->createView(),
         ]);
     }

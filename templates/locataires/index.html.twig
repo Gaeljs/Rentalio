@@ -6,71 +6,77 @@
 {% if app.user %}
 {# Contenu pour les utilisateurs connectés #}
 
-{# titre de la page #}
-<div class="container my-4">
-    <h1>Liste des locataires</h1>
-    <hr>
-</div>
-{# fin titre de la page #}
-
-{# Action de la page #}
-<div class="container">
-    <ul class="list-group list-group-horizontal">
-            <a href="{{ path('app_locataires_create') }}" class="btn btn-primary">Ajouter locataire</a>
-    </ul>
-</div>
-{# Fin action de la page #}
-
-
-{# Message success/alert #}
-<div class="container my-3" style="width: auto">
-{% for message in app.flashes('success') %}
-<div class="alert alert-success text-center p-2">
-{{ message }}
-</div>
-{% endfor %}
-</div>
-{# Fin Message success/alert #}
-
-{# CARD #}
-<div class="container">
-<div class="row">
-{% for locataire in locataires %}
-<div class="card m-3" style="width: 25rem;">
-    <div class="card-body">
-            <h5 class="card-title">{{locataire.nom}} {{locataire.prenom}}</h5>
-            <hr>
-            <p class="card-text">Adresse : {{ locataire.adresse }}</p>
-            <p class="card-text">Mail : {{ locataire.email }}</p>
-            <p class="card-text">Téléphone : {{ locataire.telephone }}</p>
-            <hr>
-            <div class="row my-3">
-            <div class="col-4 d-flex justify-content-center">
-            <a href="#" class="btn btn-primary">Gérer</a>
-            </div>
-            <div class="col-4 d-flex justify-content-center">
-            <a href="{{ path('app_locataires_edit', {'id': locataire.id}) }}" class="btn btn-primary">Modifier</a>
-            </div>
-            <div class="col-4 d-flex justify-content-center">
-                    <form method="POST" action="{{ path('app_locataires_delete', {'id': locataire.id}) }}" onsubmit="return confirm('Etes vous sur ?')" style="display: inline-block;">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ locataire.id) }}">
-                    <button type="submit" class="btn btn-primary">Supprimer</button>
-                    </form>
-            </div>
-            </div>
+{# haut de la page #}
+<section class="bg-dark py-5">
+    <div class="container px-4 px-lg-5">
+        <div class="text-center text-white">
+            <h2 class="display-4 fw-bolder">Liste des locataires</h2>
+            <p class="lead fw-normal text-white-50 mb-0">Lorem ipsum dolor sit amet.</p>
+        </div>
+        <div class="container my-3">
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+            <a href="{{ path('app_locataires_create') }}" class="btn btn-primary">Ajouter un locataire</a>
+            </ul>
+        </div>
     </div>
-</div>
+</section>
+{# fin haut de la page #}
+
+
+<div class="row text-center p-2 my-5 mx-5 justify-content-center">
+{% for locataire in locataires %}
+    <div class="card h-100 m-3" style="width: 24rem">    
+    <!-- Locataire details-->
+    <div class="card-body p-4">
+        <div class="text-center">
+            <!-- Product name-->
+            <h5 class="fw-bolder">{{locataire.nom}} {{locataire.prenom}}</h5>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+            Adresse : {{ locataire.adresse }}
+            </li>
+            <li class="list-group-item">
+            Mail : {{ locataire.email }}
+            </li>
+            <li class="list-group-item">
+            Téléphone : {{ locataire.telephone }}
+            </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Product actions-->
+    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+    <div class="row">
+        <div class="col-6 text-center">
+            <form method="POST" action="{{ path('app_locataires_delete', {'id': locataire.id}) }}" onsubmit="return confirm('Etes vous sur ?')" style="display: inline-block;">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ locataire.id) }}">
+                <button type="submit" class="btn btn-outline-dark m-2">Supprimer</button>
+            </form>
+        </div>
+        <div class="col-6 text-center">
+            <a class="btn btn-outline-dark m-2" href="{{ path('app_locataires_edit', {'id': locataire.id}) }}">Modifier</a>
+        </div>
+    </div>
+    </div>
+    </div>
 {% endfor %}
-{# Fin CARD #}
-
-
-
 </div>
-</div>
+
 
 {% else %}
-    <div class="container my-5 text-center border rounded p-5 bg-danger">
-    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    <div class="container" style="height: 100vh">
+                        <div class="row justify-content-center align-middle">
+                            <div class="col-lg-6">
+                                <div class="text-center mt-4">
+                                    <h2 class="display-1 text-danger">Accés refusé</h2>
+                                    <p>Vous  n'êtes pas authorisé à accéder à cette ressource</p>
+                                    <p>Merci de bien vouloir vous connecté afin d'accéder à cette page</p>
+                                    <a href="{{path('app_main')}}">
+                                        Retour au formulaire de connexion
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
     </div>
 {% endif %}
 {% endblock %}

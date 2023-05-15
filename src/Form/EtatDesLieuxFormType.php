@@ -34,7 +34,7 @@ class EtatDesLieuxFormType extends AbstractType
                     'Sortie' => 'sortie'
                 ], 
                 'attr' => [
-                    'class' => 'form-control my-2'
+                    'class' => 'form-control my-2 mb-2'
                 ]
             ])
             

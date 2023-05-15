@@ -6,49 +6,77 @@
 {% if app.user %}
 {# Contenu pour les utilisateurs connectés #}
 
-<div class="container my-4">
-    <h1>Gestion Etat des lieux ✅</h1>
-    <hr>
-</div>
 
-<div class="container">
-    <ul class="list-group list-group-horizontal">
-        <li class="list-group-item">
-            <a href="{{ path('app_etatdeslieux_create') }}">Ajouter un etat des lieux</a>
-        </li>
-    </ul>
-</div>
+{# haut de page #}
+<section class="bg-dark py-5">
+    <div class="container px-4 px-lg-5">
+        <div class="text-center text-white">
+            <h2 class="display-4 fw-bolder">Etat des lieux</h2>
+            <p class="lead fw-normal text-white-50 mb-0">Avant de créer un contrat, vérifier que le locataire et le propriétaire ont réalisé un etat des lieux.</p>
+        </div>
+        <div class="container my-3">
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+            <a href="{{ path('app_etatdeslieux_create')}}" class="btn btn-primary">Ajouter un état des lieux</a>
+            </ul>
+        </div>
+    </div>
+</section>
+{# fin haut de  page #}
 
-<div class="container my-3">
-    <div class="row">
-        {% for etat in etatdeslieuux %}
-            <div class="card m-3 p-3" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title"> État des lieux : {{ etat.id }}</h5>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Id : {{ etat.id }} </li>
-                    <li class="list-group-item">Date : {{ etat.date|date('Y-m-d') }} </li>
-                    <li class="list-group-item">Type : {{ etat.type }} </li>
-                    <li class="list-group-item">Contrat : {{ etat.getContratId() }} </li>
-                </ul>
-                <div class="card-body">
-                    <form action="{{ path('app_etatdeslieux_delete', {'id': etat.id}) }}" method="post" onsubmit="return confirm('Etes vous sûr ?')">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etat.id) }}">
-                        <button type="submit" class="btn btn-danger my-3">Supprimer</button>
-                    </form>
-                    <a href="{{ path('app_etatdeslieux_edit', {'id': etat.id}) }}" class="btn btn-success">Modifier</a>
+
+
+
+<div class="container my-5">
+<div class="row">
+{% for etat in etatdeslieux %}
+<div class="card h-100 mx-3 my-3" style="width: 18rem">
+            <!-- badge -->
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ etat.type }} </div>
+            <!-- etat des lieux details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Id etats des lieux -->
+                    <h5 class="fw-bolder">Etat des lieux : {{ etat.id }} </h5>
+                    <!-- Infos etats des lieux -->
+                    <div class="d-flex justify-content-center small text-warning mb-2">
+                        <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Date : {{ etat.date|date('Y-m-d') }} </li>
+                        <li class="list-group-item">Contrat : {{ etat.getContratId() }} </li>
+                        <li class="list-group-item">Remarques : {{ etat.getRemarques() }} </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        {% endfor %}
-    </div>
+            <!-- Etats des lieux actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                    <form action="{{ path('app_etatdeslieux_delete', {'id': etat.id}) }}" method="post" onsubmit="return confirm('Etes vous sûr ?')">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etat.id) }}">
+                        <button type="submit" class="btn btn-outline-dark my-3">Supprimer</button>
+                    </form>
+                    <a href="{{ path('app_etatdeslieux_edit', {'id': etat.id}) }}" class="btn btn-outline-dark mt-auto my-3">Modifier</a>
+                </div>
+            </div>
+</div>
+{% endfor %}
+</div>
 </div>
 
 
 {% else %}
-    {# Contenu si pas connecté #}
-    <div class="container my-5 text-center border rounded p-5 bg-danger">
-    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    <div class="container" style="height: 100vh">
+                        <div class="row justify-content-center align-middle">
+                            <div class="col-lg-6">
+                                <div class="text-center mt-4">
+                                    <h2 class="display-1 text-danger">Accés refusé</h2>
+                                    <p>Vous  n'êtes pas authorisé à accéder à cette ressource</p>
+                                    <p>Merci de bien vouloir vous connecté afin d'accéder à cette page</p>
+                                    <a href="{{path('app_main')}}">
+                                        Retour au formulaire de connexion
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
     </div>
 {% endif %}
 

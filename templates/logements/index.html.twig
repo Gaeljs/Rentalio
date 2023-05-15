@@ -1,82 +1,98 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LogementsController!{% endblock %}
+{% block title %}Logements{% endblock %}
 
 {% block body %}
 {% if app.user %}
 {# Contenu pour les utilisateurs connectés #}
 
-<div class="container my-4">
-    <h2>Liste des logements</h2>
-    <hr>
-</div>
+{# ____________ #}
 
-{#  Message de validation  #}
-<div class="container my-3">
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success text-center p-2">
-            {{ message }}
+{# haut de la page #}
+<section class="bg-dark py-5">
+    <div class="container px-4 px-lg-5">
+        <div class="text-center text-white">
+            <h2 class="display-4 fw-bolder">Ajouter un logement</h2>
+            <p class="lead fw-normal text-white-50 mb-0">Lorem ipsum dolor sit amet.</p>
         </div>
-    {% endfor %}
-</div>
-{# Fin Message de validation  #}
+        <div class="container my-3">
+            <ul class="list-group list-group-horizontal d-flex justify-content-center">
+            <a href="{{ path('app_logements_create') }}" class="btn btn-primary">Créer un logement</a>
+            </ul>
+        </div>
+    </div>
+</section>
+{# fin haut de la page #}
 
 
-<div class="container">
-        <li class="list-group-item">
-            <a href="{{ path('app_logements_create') }}" class="btn btn-primary">Ajouter logement</a>
-        </li>
-</div>
-
-
-<div class="container">
+<div class="container my-5">
 <div class="row">
 {% for logement in logements %}
 {% set isGestion = logement.isGestion %}
-<div class="card my-3 mx-3 p-3" style="width: 24rem;">
-    <div class="card-body">
-        <h5 class="card-title">Ville : {{ logement.ville }}</h5>
-        <p class="card-text m-0"> Adresse : {{logement.adresse}}</p> 
-        <p class="card-text"> Compléments : {{logement.complement}}</p> 
-        <p>
-            {% if isGestion %}
-                <span style="color: green;">Nous prélevons 8% de frais de gestion sur le loyer.</span>
-            {% endif %}
-        </p>
-
-
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Code postal : {{ logement.codePostal }} </li>
-        <li class="list-group-item">Montant du loyer : {{ logement.montantLoyer }} € </li>
-        <li class="list-group-item">Charges : {{ logement.charges }} € </li>
-        <li class="list-group-item">Dépot de garantie : {{ logement.MontantDepotGarantie }} €  </li>
-        <li class="list-group-item">Gérer par agence : {% if logement.gestion == 1 %} oui {% elseif logement.gestion == 0 %} non {% endif %}</li>
-    </ul>
-    <div class="card-body">
-
-    <div class="row text-center">
-        <div class="col-6">
-            <a href="{{ path('app_logements_edit', {'id': logement.id}) }}" class="btn btn-primary">Modifier</a>
+    <div class="card h-100 m-3 justify-content-center" style="width: 18rem">
+        <img class="card-img-top mt-2 border rounded" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+        <div class="card-body p-4">
+            <div class="text-center">
+                <h5 class="fw-bolder">{{ logement.ville }}</h5>
+                <div class="d-flex justify-content-center small text-warning mb-2">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Adresse : {{logement.adresse}}
+                    </li>
+                    <li class="list-group-item">
+                        Complément : {{logement.complement}}
+                    </li>
+                    <li class="list-group-item">
+                        Code postal : {{ logement.codePostal }}
+                    </li>
+                    <li class="list-group-item">
+                        Charges : {{ logement.charges }} € 
+                    </li>
+                    <li class="list-group-item">
+                        Dépot de garantie : {{ logement.MontantDepotGarantie }} € 
+                    </li>
+                    <li class="list-group-item">
+                        Gérer par agence : {% if logement.gestion == 1 %} oui {% elseif logement.gestion == 0 %} non {% endif %}
+                    </li>
+                    <li class="list-group-item">
+                        Montant du loyer : {{ logement.montantLoyer }} € 
+                    </li>
+                    <li class="list-group-item">
+                        {% if isGestion %}
+                            <span style="color: green;">Nous prélevons 8% de frais de gestion sur le loyer.</span>
+                        {% endif %}
+                    </li>
+                </ul>
+                </div>
+            </div>
         </div>
-        <div class="col-6">
+        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+            <a href="{{ path('app_logements_edit', {'id': logement.id}) }}" class="btn btn-outline-dark m-3">Modifier</a>
             <form action="{{ path('app_logements_delete', {'id': logement.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce logement ?')">
-                <button type="submit" class="btn btn-primary">Supprimer</button>
+                <button type="submit" class="btn btn-outline-dark mt-auto">Supprimer</button>
             </form>
+            </div>
         </div>
     </div>
-
-    </div>
-</div>
 {% endfor %}
 </div>
 </div>
 
-
-
 {% else %}
-    <div class="container my-5 text-center border rounded p-5 bg-danger">
-    <h5>Merci de bien vouloir vous connecté afin d'accéder a cette page</h5>
+    <div class="container" style="height: 100vh">
+                        <div class="row justify-content-center align-middle">
+                            <div class="col-lg-6">
+                                <div class="text-center mt-4">
+                                    <h2 class="display-1 text-danger">Accés refusé</h2>
+                                    <p>Vous  n'êtes pas authorisé à accéder à cette ressource</p>
+                                    <p>Merci de bien vouloir vous connecté afin d'accéder à cette page</p>
+                                    <a href="{{path('app_main')}}">
+                                        Retour au formulaire de connexion
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
     </div>
 {% endif %}
 

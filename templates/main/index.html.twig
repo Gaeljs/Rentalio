@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
 {% if app.user %}
@@ -9,19 +9,49 @@
 
 
 
-
-<div class="container my-3 bg-success">
-<h2>
-{% if app.user %}
-    Bonjour {{ app.user.nom }} !</p>
-    Id : {{ app.user.id }}
-{% endif %}
-</h2>
+    <div class="container mb-5">
+            <div class="card text-white bg-success my-5 py-3 text-center">
+                <div class="card-body"><p class="text-white m-0"><h5 class="m-3">{% if app.user %} Bienvenue sur Rentalio : {{ app.user.nom }}{% endif %}</h5></p></div>
+            </div>
+            <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Gérer vos locataires</h2>
+                            <p class="card-text">Trouvez des locataires qualifiés rapidement ! Ajoutez et suivez leurs informations personnelles et financières dans notre système de gestion locative.</p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="{{path('app_locataires')}}">Locataires</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Gérer vos logements</h2>
+                            <p class="card-text">Gérez vos biens immobiliers facilement ! Ajoutez des logements en quelques clics dans notre plateforme de gestion locative intuitive</p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="{{ path('app_logements')}}">Logements</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="card-title">Gerer vos contrats</h2>
+                            <p class="card-text">Simplifiez la création de contrats de location ! Générez des contrats professionnels personnalisés en quelques instants avec notre fonctionnalité dédiée.</p>
+                        </div>
+                        <div class="card-footer"><a class="btn btn-primary btn-sm" href="{{path('app_contrats')}}">Contrats</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
 
 
+
+
+
 {% else %}
-<header class="bg-dark py-5" style="height: 90vh">
+<section class="bg-dark py-5" style="height: 90vh">
     <div class="container px-5">
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-6">
@@ -36,6 +66,6 @@
             </div>
         </div>
     </div>
-</header>
+</section>
 {% endif %}
 {% endblock %}
