@@ -18,24 +18,8 @@ class Contrat
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'contrats')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name:'locataire_id', referencedColumnName: 'id', nullable: false)]
     private ?Locataire $locataire_id = null;
-
-    private $locataire;
-
-    // ... other properties
-
-    public function getLocataire(): ?Locataire
-    {
-        return $this->locataire;
-    }
-
-    public function setLocataire(?Locataire $locataire): self
-    {
-        $this->locataire = $locataire;
-
-        return $this;
-    }
 
     #[ORM\ManyToOne(inversedBy: 'contrats')]
     #[ORM\JoinColumn(nullable: false)]
@@ -83,14 +67,15 @@ class Contrat
         return $this->id;
     }
 
+
     public function getLocataireId(): ?Locataire
     {
         return $this->locataire_id;
     }
 
-    public function setLocataireId(?Locataire $locataire_id): self
+    public function setLocataireId(?Locataire $locataire): self
     {
-        $this->locataire_id = $locataire_id;
+        $this->locataire_id = $locataire;
 
         return $this;
     }

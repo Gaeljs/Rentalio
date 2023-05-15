@@ -30,7 +30,7 @@ class Locataire
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\OneToMany(mappedBy: 'locataire_id', targetEntity: Contrat::class)]
+    #[ORM\OneToMany(mappedBy: 'locataire', targetEntity: Contrat::class)]
     private Collection $contrats;
 
     public function __toString(): string
@@ -120,7 +120,7 @@ class Locataire
     {
         if (!$this->contrats->contains($contrat)) {
             $this->contrats->add($contrat);
-            $contrat->setLocataireId($this);
+            $contrat->setLocataire($this);
         }
 
         return $this;
@@ -130,8 +130,8 @@ class Locataire
     {
         if ($this->contrats->removeElement($contrat)) {
             // set the owning side to null (unless already changed)
-            if ($contrat->getLocataireId() === $this) {
-                $contrat->setLocataireId(null);
+            if ($contrat->getLocataire() === $this) {
+                $contrat->setLocataire(null);
             }
         }
 
