@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ContratsController!{% endblock %}
+{% block title %}Contrats{% endblock %}
 
 {% block body %}
 {% if app.user %}
-{# Contenu pour les utilisateurs connectés #}
+{# Contenu pour les utilisateurs connecté #}
 
 {# haut de la page #}
 <section class="bg-dark py-5">
     <div class="container px-4 px-lg-5">
         <div class="text-center text-white">
             <h2 class="display-4 fw-bolder">Créer un contrat</h2>
-            <p class="lead fw-normal text-white-50 mb-0">Lorem ipsum dolor sit amet.</p>
+            <p class="lead fw-normal text-white-50 mb-0">cliquer sur le bouton pour créer un nouveau contrat</p>
         </div>
         <div class="container my-3">
             <ul class="list-group list-group-horizontal d-flex justify-content-center">
@@ -24,94 +24,84 @@
 {# fin haut de la page #}
 
 
-
 <div class="row">
-<div class="col">
-{% for contrat in contrats %}
-{% if not contrat.archived %}
-<div class="container my-4" style="width: 24rem;">
-<div class="col mb-5">
-<div class="card h-100">
-
-<!-- Badge-->
-<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Contrat numéro : {{ contrat.id }} </div>
-<!-- Badge-->
-
-<!-- Contrat détails -->
-<div class="card-body p-4 my-2">
-    <div class="text-center">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-            {% if contrat.isLoyerUpToDate() %}
-                <span class="text-success">Loyer payé</span>
-            {% else %}
-                <span class="text-danger">Loyer non payé</span>
+    <div class="col">
+        {% for contrat in contrats %}
+            {% if not contrat.archived %}
+            <div class="container my-4" style="width: 24rem;">
+                <div class="col mb-5">
+                    <div class="card h-100">
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Contrat numéro : {{ contrat.id }} </div>
+                            <div class="card-body p-4 my-2">
+                                <div class="text-center">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            {% if contrat.isLoyerUpToDate() %}
+                                                <span class="text-success">Loyer payé</span>
+                                            {% else %}
+                                                <span class="text-danger">Loyer non payé</span>
+                                            {% endif %}
+                                        </li>
+                                        <li class="list-group-item">
+                                            {% if contrat.isDepotDeGarantiePaid() %}
+                                                <span class="text-success">Dépôt de garantie versé</span>
+                                            {% else %}
+                                                <span class="text-danger">Dépôt de garantie non versé</span>
+                                            {% endif %}
+                                        </li>
+                                    <li class="list-group-item">Locataire : {{ contrat.getLocataireId() }}</li>
+                                    <li class="list-group-item">Logement : {{ contrat.getLogementId() }}</li>
+                                    <li class="list-group-item">Date d'entrée : {{ contrat.dateEntree|date('d/m/y') }}</li>
+                                    <li class="list-group-item">Date de sortie : {{ contrat.dateSortie|date('d/m/y') }}</li>
+                                    <li class="list-group-item">
+                                        {% if contrat.isLoyerUpToDate and contrat.isDepotDeGarantiePaid %}
+                                            <a href="{{ path('app_contrats_bilan', {id: contrat.id}) }}" class="text-success">Document de sortie disponible</a>
+                                        {% else %}
+                                            <span class="text-muted text-danger">Document de sortie non disponible</span>
+                                        {% endif %}
+                                    </li>
+                                    <li class="list-group-item">Solde : {{ soldes[contrat.id] }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a href="{{ path('app_contrats_edit', {'id': contrat.id}) }}" class="btn btn-outline-dark mt-auto">Modifier</a></div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">                    
+                                    <form method="POST" action="{{ path('app_contrats_delete', {'id': contrat.id}) }}" onsubmit="return confirm('Etes vous sur ?')">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contrat.id) }}">
+                                        <button type="submit" class="btn btn-outline-dark mt-auto">Supprimer</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">                    
+                                    {% if contrat.isLoyerUpToDate %}
+                                        <a href="{{ path('app_contrats_quittance', {id: contrat.id}) }}" class="btn btn-primary">Quittance</a>
+                                    {% else %}
+                                        <span class="text-muted">Quittance non disponible</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                    </div> 
+                </div>
+            </div>
             {% endif %}
-            </li>
-            <li class="list-group-item">
-            {% if contrat.isDepotDeGarantiePaid() %}
-                <span class="text-success">Dépôt de garantie versé</span>
-            {% else %}
-                <span class="text-danger">Dépôt de garantie non versé</span>
-            {% endif %}
-            </li>
-            <li class="list-group-item">Locataire : {{ contrat.getLocataireId() }}</li>
-            <li class="list-group-item">Logement : {{ contrat.getLogementId() }}</li>
-            <li class="list-group-item">Date d'entrée : {{ contrat.dateEntree|date('d/m/y') }}</li>
-            <li class="list-group-item">Date de sortie : {{ contrat.dateSortie|date('d/m/y') }}</li>
-            <li class="list-group-item">
-            {% if contrat.isLoyerUpToDate and contrat.isDepotDeGarantiePaid %}
-                <a href="{{ path('app_contrats_bilan', {id: contrat.id}) }}" class="text-success">Document de sortie disponible</a>
-            {% else %}
-                <span class="text-muted text-danger">Document de sortie non disponible</span>
-            {% endif %}
-            </li>
-            <li class="list-group-item">Solde : {{ soldes[contrat.id] }}</li>
-        </ul>
+        {% endfor %}
     </div>
 </div>
-<!-- Contrat détails -->
-
-<!-- Product actions -->
-<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-    <div class="text-center"><a href="{{ path('app_contrats_edit', {'id': contrat.id}) }}" class="btn btn-outline-dark mt-auto">Modifier</a></div>
-</div>
-<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-    <div class="text-center">                    
-    <form method="POST" action="{{ path('app_contrats_delete', {'id': contrat.id}) }}" onsubmit="return confirm('Etes vous sur ?')">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contrat.id) }}">
-        <button type="submit" class="btn btn-outline-dark mt-auto">Supprimer</button>
-    </form></div>
-</div>
-<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-    <div class="text-center">                    
-    {% if contrat.isLoyerUpToDate %}
-    <a href="{{ path('app_contrats_quittance', {id: contrat.id}) }}" class="btn btn-primary">Quittance</a>
-    {% else %}
-    <span class="text-muted">Quittance non disponible</span>
-    {% endif %}
-    </div>
-</div>
-<!-- Product actions -->
-
-</div> 
-</div>
-</div>
-{% endif %}
-{% endfor %}
-</div>
-</div>
-
 
 
 {% else %}
+{# Contenu pour les utilisateurs non connecté #}
     <div class="container" style="height: 100vh">
                         <div class="row justify-content-center align-middle">
                             <div class="col-lg-6">
                                 <div class="text-center mt-4">
                                     <h2 class="display-1 text-danger">Accés refusé</h2>
-                                    <p>Vous  n'êtes pas authorisé à accéder à cette ressource</p>
-                                    <p>Merci de bien vouloir vous connecté afin d'accéder à cette page</p>
+                                    <p>Vous  n'êtes pas autorisé à accéder à cette ressource</p>
+                                    <p>Merci de bien vouloir vous connecter afin d'accéder à cette page</p>
                                     <a href="{{path('app_main')}}">
                                         Retour au formulaire de connexion
                                     </a>

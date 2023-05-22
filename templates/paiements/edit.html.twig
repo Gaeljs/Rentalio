@@ -7,7 +7,7 @@
 {% block body %}
 
 {% if app.user %}
-{# Contenu pour les utilisateurs connectés #}
+{# Contenu pour les utilisateurs connecté #}
 
 
 {#  Formulaire de modification d'un paiement  #}
@@ -26,13 +26,14 @@
 
 
 {% else %}
+{# Contenu pour les utilisateurs non connecté #}
     <div class="container" style="height: 100vh">
                         <div class="row justify-content-center align-middle">
                             <div class="col-lg-6">
                                 <div class="text-center mt-4">
                                     <h2 class="display-1 text-danger">Accés refusé</h2>
-                                    <p>Vous  n'êtes pas authorisé à accéder à cette ressource</p>
-                                    <p>Merci de bien vouloir vous connecté afin d'accéder à cette page</p>
+                                    <p>Vous  n'êtes pas autorisé à accéder à cette ressource</p>
+                                    <p>Merci de bien vouloir vous connecter afin d'accéder à cette page</p>
                                     <a href="{{path('app_main')}}">
                                         Retour au formulaire de connexion
                                     </a>
@@ -41,5 +42,4 @@
                         </div>
     </div>
 {% endif %}
-
 {% endblock %}

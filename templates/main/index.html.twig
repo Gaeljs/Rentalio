@@ -5,10 +5,6 @@
 {% block body %}
 {% if app.user %}
 {# Contenu pour les utilisateurs connectés #}
-
-
-
-
     <div class="container mb-5">
             <div class="card text-white bg-success my-5 py-3 text-center">
                 <div class="card-body"><p class="text-white m-0"><h5 class="m-3">{% if app.user %} Bienvenue sur Rentalio : {{ app.user.nom }}{% endif %}</h5></p></div>
@@ -45,19 +41,16 @@
             </div>
         </div>
 </div>
-
-
-
-
-
 {% else %}
+
+{# Contenu pour les utilisateurs non connectés #}
 <section class="bg-dark py-5" style="height: 90vh">
     <div class="container px-5">
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-6">
                 <div class="text-center my-5">
-                    <h1 class="display-5 fw-bolder text-white mb-2">Transformez votre gestion locative en une expérience fluide et productive</h1>
-                    <p class="lead text-white-50 mb-4">Rentabilisez chaque instant avec notre application de gestion locative ultra-performante</p>
+                    <h1 class="display-5 fw-bolder text-white mb-2">Transformez votre gestion locative en une expérience fluide et productive.</h1>
+                    <p class="lead text-white-50 mb-4">Rentabilisez chaque instant avec notre application de gestion locative ultra-performante.</p>
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
                         <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{{path('app_register')}}">Créer un compte</a>
                         <a class="btn btn-outline-light btn-lg px-4" href="{{path('app_login')}}">Connexion</a>
@@ -67,5 +60,6 @@
         </div>
     </div>
 </section>
+
 {% endif %}
 {% endblock %}

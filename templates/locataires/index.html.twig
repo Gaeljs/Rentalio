@@ -6,12 +6,11 @@
 {% if app.user %}
 {# Contenu pour les utilisateurs connectés #}
 
-{# haut de la page #}
 <section class="bg-dark py-5">
     <div class="container px-4 px-lg-5">
         <div class="text-center text-white">
             <h2 class="display-4 fw-bolder">Liste des locataires</h2>
-            <p class="lead fw-normal text-white-50 mb-0">Lorem ipsum dolor sit amet.</p>
+            <p class="lead fw-normal text-white-50 mb-0">Cliquer sur le bouton pour ajouter un nouveau locataire</p>
         </div>
         <div class="container my-3">
             <ul class="list-group list-group-horizontal d-flex justify-content-center">
@@ -20,16 +19,12 @@
         </div>
     </div>
 </section>
-{# fin haut de la page #}
-
 
 <div class="row text-center p-2 my-5 mx-5 justify-content-center">
 {% for locataire in locataires %}
     <div class="card h-100 m-3" style="width: 24rem">    
-    <!-- Locataire details-->
     <div class="card-body p-4">
         <div class="text-center">
-            <!-- Product name-->
             <h5 class="fw-bolder">{{locataire.nom}} {{locataire.prenom}}</h5>
             <ul class="list-group list-group-flush">
             <li class="list-group-item">
@@ -44,7 +39,6 @@
             </ul>
         </div>
     </div>
-    <!-- Product actions-->
     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
     <div class="row">
         <div class="col-6 text-center">
@@ -64,13 +58,14 @@
 
 
 {% else %}
+{# Contenu pour les utilisateurs non connectés #}
     <div class="container" style="height: 100vh">
                         <div class="row justify-content-center align-middle">
                             <div class="col-lg-6">
                                 <div class="text-center mt-4">
                                     <h2 class="display-1 text-danger">Accés refusé</h2>
-                                    <p>Vous  n'êtes pas authorisé à accéder à cette ressource</p>
-                                    <p>Merci de bien vouloir vous connecté afin d'accéder à cette page</p>
+                                    <p>Vous  n'êtes pas autorisé à accéder à cette ressource</p>
+                                    <p>Merci de bien vouloir vous connecter afin d'accéder à cette page</p>
                                     <a href="{{path('app_main')}}">
                                         Retour au formulaire de connexion
                                     </a>

@@ -4,7 +4,7 @@
 
 <section style="height: 90vh"> 
 <div class="container border rounded  p-3 my-5 mb-5 " style="max-width: 400px">
-    <h2>Inscription</h2> 
+    <h2 class="text-center">Inscription</h2> 
     {{ form_start(registrationForm) }}
     <fieldset>
         <legend>Votre agence</legend>
@@ -16,12 +16,12 @@
     </fieldset>
 
     <fieldset class="my-3">
-        <legend class="my-0">Quelle frais appliqué vous ?</legend>
+        <legend class="my-0">Quel frais appliquez-vous ?</legend>
         {{ form_row(registrationForm.frais) }}
     </fieldset>
 
     {{ form_row(registrationForm.agreeTerms) }}    
-    <button type="submit" class="btn btn-primary my-3">Je créer un compte</button>
+    <button type="submit" class="btn btn-primary my-3">Je crée un compte</button>
     {{ form_end(registrationForm) }}
 </div>
 </section>

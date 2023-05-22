@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EtatdeslieuxController!{% endblock %}
+{% block title %}Etat des lieux{% endblock %}
 
 {% block body %}
 {% if app.user %}
-{# Contenu pour les utilisateurs connectés #}
+{# Contenu pour les utilisateurs connecté #}
 
 
 {# haut de page #}
@@ -25,19 +25,14 @@
 
 
 
-
 <div class="container my-5">
 <div class="row">
 {% for etat in etatdeslieux %}
 <div class="card h-100 mx-3 my-3" style="width: 18rem">
-            <!-- badge -->
             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">{{ etat.type }} </div>
-            <!-- etat des lieux details-->
             <div class="card-body p-4">
                 <div class="text-center">
-                    <!-- Id etats des lieux -->
                     <h5 class="fw-bolder">Etat des lieux : {{ etat.id }} </h5>
-                    <!-- Infos etats des lieux -->
                     <div class="d-flex justify-content-center small text-warning mb-2">
                         <ul class="list-group list-group-flush">
                         <li class="list-group-item">Date : {{ etat.date|date('Y-m-d') }} </li>
@@ -47,7 +42,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Etats des lieux actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                 <div class="text-center">
                     <form action="{{ path('app_etatdeslieux_delete', {'id': etat.id}) }}" method="post" onsubmit="return confirm('Etes vous sûr ?')">
@@ -64,13 +58,14 @@
 
 
 {% else %}
+{# Contenu pour les utilisateurs non connecté #}
     <div class="container" style="height: 100vh">
                         <div class="row justify-content-center align-middle">
                             <div class="col-lg-6">
                                 <div class="text-center mt-4">
                                     <h2 class="display-1 text-danger">Accés refusé</h2>
-                                    <p>Vous  n'êtes pas authorisé à accéder à cette ressource</p>
-                                    <p>Merci de bien vouloir vous connecté afin d'accéder à cette page</p>
+                                    <p>Vous  n'êtes pas autorisé à accéder à cette ressource</p>
+                                    <p>Merci de bien vouloir vous connecter afin d'accéder à cette page</p>
                                     <a href="{{path('app_main')}}">
                                         Retour au formulaire de connexion
                                     </a>
@@ -79,5 +74,4 @@
                         </div>
     </div>
 {% endif %}
-
 {% endblock %}
